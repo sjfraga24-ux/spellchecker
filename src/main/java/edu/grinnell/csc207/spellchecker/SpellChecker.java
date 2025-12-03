@@ -3,13 +3,14 @@ package edu.grinnell.csc207.spellchecker;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * A spellchecker maintains an efficient representation of a dictionary for
  * the purposes of checking spelling and provided suggested corrections.
  */
-public class SpellChecker {
+public class SpellChecker{
     /** The number of letters in the alphabet. */
     private static final int NUM_LETTERS = 26;
 
@@ -26,18 +27,41 @@ public class SpellChecker {
 
     /** A Node of the SpellChecker structure. */
     private class Node {
-        // TODO: implement me!
+       char val;
+       ArrayList<Node> next;
+       public Node(char val){
+        this.val = val;
+        this.next = new ArrayList<Node>();
+       }
     }
 
     /** The root of the SpellChecker */
-    private Node root;
+    private ArrayList<Node> root;
 
     public SpellChecker(List<String> dict) {
         // TODO: implement me!
     }
 
     public void add(String word) {
-        // TODO: implement me!
+        char[] arr = word.toCharArray();
+        addHelper(arr, 0, root);
+    }
+
+    public void addHelper(char[] word, int n, ArrayList<Node> branch){
+        if(n == word.length){
+            return;
+        }
+        for(int i =0; i<branch.size(); i++){
+            if(word[n]==branch.get(i).val){
+                addHelper(word, n++, branch.get(i).next);
+                return;
+            }
+
+        }
+        Node temp = new Node(word[n]);
+        branch.add(temp);
+        addHelper(word, n, branch.get(branch.size()-1).next);
+        
     }
 
     public boolean isWord(String word) {
