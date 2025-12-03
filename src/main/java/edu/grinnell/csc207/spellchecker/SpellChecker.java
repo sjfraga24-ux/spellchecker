@@ -39,7 +39,9 @@ public class SpellChecker{
     private ArrayList<Node> root;
 
     public SpellChecker(List<String> dict) {
-        // TODO: implement me!
+        for(int i = 0; i < dict.size(); i++){
+            add(dict.get(i));
+        }
     }
 
     public void add(String word) {
